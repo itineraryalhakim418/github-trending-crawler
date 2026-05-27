@@ -29,15 +29,20 @@
 
 ### 安装教程
 
-#### 方式一：直接运行 exe（推荐）
+#### 方式一：安装包（推荐）
 
 1. 前往 [Releases](https://github.com/NiMark886/github-trending-crawler/releases) 页面
-2. 下载 `TrendingCrawler.exe`
-3. 双击运行即可，无需安装 Python
+2. 下载 `TrendingCrawler_Setup.exe`
+3. 双击运行，点击「安装」即可自动安装到桌面
+
+#### 方式二：便携版
+
+1. 下载 `TrendingCrawler.exe`
+2. 双击直接运行，无需安装
 
 > 如果被杀毒软件拦截，请添加信任或暂时关闭杀毒软件。
 
-#### 方式二：从源码运行
+#### 方式三：从源码运行
 
 **前置要求：** Python 3.8+
 
@@ -199,15 +204,20 @@ A Python-based GitHub trending repository crawler with a Win11 Explorer-style GU
 
 ### Installation
 
-#### Option 1: Download exe (Recommended)
+#### Option 1: Installer (Recommended)
 
 1. Go to [Releases](https://github.com/NiMark886/github-trending-crawler/releases)
-2. Download `TrendingCrawler.exe`
-3. Double-click to run, no Python needed
+2. Download `TrendingCrawler_Setup.exe`
+3. Double-click and click "Install" — installs to desktop automatically
+
+#### Option 2: Portable
+
+1. Download `TrendingCrawler.exe`
+2. Double-click to run directly, no installation needed
 
 > If blocked by antivirus, add an exception or temporarily disable it.
 
-#### Option 2: Run from source
+#### Option 3: Run from source
 
 **Requirements:** Python 3.8+
 
