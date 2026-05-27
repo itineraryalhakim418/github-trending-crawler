@@ -1307,7 +1307,8 @@ class GitHubCrawlerGUI(ctk.CTk):
     def _open_detail(self, repo):
         dlg = ctk.CTkToplevel(self)
         dlg.title(repo.get('name', 'Detail'))
-        dlg.geometry("800x700")
+        dlg.geometry("900x850")
+        dlg.minsize(750, 600)
         dlg.configure(fg_color=C['bg'])
         dlg.transient(self)
         dlg.after(100, dlg.grab_set)
@@ -1440,7 +1441,7 @@ class GitHubCrawlerGUI(ctk.CTk):
         # --- Issues ---
         issues_frame = ctk.CTkFrame(dlg, fg_color=C['card'], corner_radius=8,
                                      border_width=1, border_color=C['border'])
-        issues_frame.pack(fill='x', padx=12, pady=(6, 12))
+        issues_frame.pack(fill='both', expand=True, padx=12, pady=(6, 12))
 
         iss_top = ctk.CTkFrame(issues_frame, fg_color='transparent')
         iss_top.pack(fill='x', padx=12, pady=(8, 4))
@@ -1450,7 +1451,7 @@ class GitHubCrawlerGUI(ctk.CTk):
         ctk.CTkLabel(iss_top, text=f"({iss_count})", font=F['body'],
                      text_color=C['text2']).pack(side='left', padx=6)
 
-        issues_box = ctk.CTkScrollableFrame(issues_frame, fg_color=C['card'], height=200)
+        issues_box = ctk.CTkScrollableFrame(issues_frame, fg_color=C['card'], height=250)
         issues_box.pack(fill='x', padx=12, pady=(0, 8))
 
         def load_issues():
@@ -1536,7 +1537,7 @@ class GitHubCrawlerGUI(ctk.CTk):
     def _load_issue_comments(self, parent, repo_name, issue_num, headers):
         detail_win = ctk.CTkToplevel(self)
         detail_win.title(f"#{issue_num}")
-        detail_win.geometry("700x500")
+        detail_win.geometry("800x600")
         detail_win.configure(fg_color=C['bg'])
         detail_win.transient(self)
         detail_win.after(100, detail_win.grab_set)
@@ -1815,7 +1816,7 @@ class GitHubCrawlerGUI(ctk.CTk):
         self.trending_tree.delete(*self.trending_tree.get_children())
         for i, r in enumerate(repos, 1):
             self.trending_tree.insert('', 'end', values=(
-                '☑', r.get('name',''), r.get('language',''),
+                '☐', r.get('name',''), r.get('language',''),
                 f"{r.get('stars',0):,}", f"{r.get('forks',0):,}",
                 r.get('description','')[:55], "下载"))
 
@@ -1846,7 +1847,7 @@ class GitHubCrawlerGUI(ctk.CTk):
         self.search_tree.delete(*self.search_tree.get_children())
         for i, r in enumerate(repos, 1):
             self.search_tree.insert('', 'end', values=(
-                '☑', r.get('name',''), r.get('owner',''), r.get('language',''),
+                '☐', r.get('name',''), r.get('owner',''), r.get('language',''),
                 f"{r.get('stars',0):,}", f"{r.get('forks',0):,}", "下载"))
 
 
