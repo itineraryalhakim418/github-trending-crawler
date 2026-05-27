@@ -634,11 +634,14 @@ class GitHubCrawlerGUI(ctk.CTk):
         ctk.CTkButton(row, text=self._t('fetch_trending'), command=self._fetch_trending,
                       fg_color=C['accent'], hover_color=C['accent_hover'],
                       font=F['body'], height=30, corner_radius=6).pack(side='left', padx=15)
+        ctk.CTkButton(row, text="下载选中", command=self._dl_selected_trending,
+                      fg_color=C['green'], hover_color=C['green_hover'],
+                      font=F['body'], height=30, corner_radius=6).pack(side='left', padx=5)
 
         self.trending_tree = self._make_tree(
-            p, ("index", "name", "language", "stars", "forks", "description", "action"),
-            ("#", "仓库名称", "语言", "Stars", "Forks", "描述", "操作"),
-            [40, 200, 70, 80, 80, 320, 60])
+            p, ("sel", "name", "language", "stars", "forks", "description", "action"),
+            ("☑", "仓库名称", "语言", "Stars", "Forks", "描述", "操作"),
+            [35, 200, 70, 80, 80, 305, 60])
         self.trending_tree.bind("<ButtonRelease-1>", self._on_trending_click)
 
     def _on_trending_click(self, e):
@@ -647,10 +650,16 @@ class GitHubCrawlerGUI(ctk.CTk):
         item = self.trending_tree.identify_row(e.y)
         if not item:
             return
-        name = self.trending_tree.item(item)['values'][1]
+        col = self.trending_tree.identify_column(e.x)
+        vals = list(self.trending_tree.item(item)['values'])
+        if col == '#1':
+            vals[0] = '☐' if vals[0] == '☑' else '☑'
+            self.trending_tree.item(item, values=vals)
+            return
+        name = vals[1]
         for r in self.current_repos:
             if r.get('name') == name:
-                if self.trending_tree.identify_column(e.x) == "#7":
+                if col == "#7":
                     self._goto_dl([r])
                 else:
                     self._open_detail(r)
@@ -685,6 +694,9 @@ class GitHubCrawlerGUI(ctk.CTk):
         ctk.CTkButton(row, text=self._t('btn_search'), command=self._search_repos,
                       fg_color=C['accent'], hover_color=C['accent_hover'],
                       font=F['body'], height=30, corner_radius=6).pack(side='left', padx=15)
+        ctk.CTkButton(row, text="下载选中", command=self._dl_selected_search,
+                      fg_color=C['green'], hover_color=C['green_hover'],
+                      font=F['body'], height=30, corner_radius=6).pack(side='left', padx=5)
 
         # Split view
         body = ctk.CTkFrame(p, fg_color='transparent')
@@ -693,9 +705,9 @@ class GitHubCrawlerGUI(ctk.CTk):
         body.grid_rowconfigure(0, weight=1)
 
         self.search_tree = self._make_tree(
-            body, ("index", "name", "owner", "language", "stars", "forks", "action"),
-            ("#", "仓库名称", "作者", "语言", "Stars", "Forks", "操作"),
-            [40, 170, 90, 60, 70, 70, 60])
+            body, ("sel", "name", "owner", "language", "stars", "forks", "action"),
+            ("☑", "仓库名称", "作者", "语言", "Stars", "Forks", "操作"),
+            [35, 170, 90, 60, 70, 70, 60])
         self.search_tree.pack_forget()
         self.search_tree.master.pack(side='left', fill='both', expand=True)
 
@@ -747,10 +759,16 @@ class GitHubCrawlerGUI(ctk.CTk):
         item = self.search_tree.identify_row(e.y)
         if not item:
             return
-        name = self.search_tree.item(item)['values'][1]
+        col = self.search_tree.identify_column(e.x)
+        vals = list(self.search_tree.item(item)['values'])
+        if col == '#1':
+            vals[0] = '☐' if vals[0] == '☑' else '☑'
+            self.search_tree.item(item, values=vals)
+            return
+        name = vals[1]
         for r in self.current_repos:
             if r.get('name') == name:
-                if self.search_tree.identify_column(e.x) == "#7":
+                if col == "#7":
                     self._goto_dl([r])
                 else:
                     self._open_detail(r)
@@ -780,15 +798,32 @@ class GitHubCrawlerGUI(ctk.CTk):
             import webbrowser
             webbrowser.open(self.current_repo_url)
 
+    def _get_checked_repos(self, tree):
+        """获取 Treeview 中所有勾选的仓库。"""
+        checked = []
+        for item in tree.get_children():
+            vals = tree.item(item)['values']
+            if vals and vals[0] == '☑':
+                name = vals[1]
+                for r in self.current_repos:
+                    if r.get('name') == name:
+                        checked.append(r)
+                        break
+        return checked
+
+    def _dl_selected_trending(self):
+        repos = self._get_checked_repos(self.trending_tree)
+        if repos:
+            self._goto_dl(repos)
+        else:
+            messagebox.showinfo(self._t('hint'), "请先勾选要下载的仓库")
+
     def _dl_selected_search(self):
-        sel = self.search_tree.selection()
-        if not sel:
-            return
-        name = self.search_tree.item(sel[0])['values'][1]
-        for r in self.current_repos:
-            if r.get('name') == name:
-                self._goto_dl([r])
-                break
+        repos = self._get_checked_repos(self.search_tree)
+        if repos:
+            self._goto_dl(repos)
+        else:
+            messagebox.showinfo(self._t('hint'), "请先勾选要下载的仓库")
 
     # ==================== URL Download Page ====================
 
@@ -1774,7 +1809,7 @@ class GitHubCrawlerGUI(ctk.CTk):
         self.trending_tree.delete(*self.trending_tree.get_children())
         for i, r in enumerate(repos, 1):
             self.trending_tree.insert('', 'end', values=(
-                i, r.get('name',''), r.get('language',''),
+                '☑', r.get('name',''), r.get('language',''),
                 f"{r.get('stars',0):,}", f"{r.get('forks',0):,}",
                 r.get('description','')[:55], "下载"))
 
@@ -1805,7 +1840,7 @@ class GitHubCrawlerGUI(ctk.CTk):
         self.search_tree.delete(*self.search_tree.get_children())
         for i, r in enumerate(repos, 1):
             self.search_tree.insert('', 'end', values=(
-                i, r.get('name',''), r.get('owner',''), r.get('language',''),
+                '☑', r.get('name',''), r.get('owner',''), r.get('language',''),
                 f"{r.get('stars',0):,}", f"{r.get('forks',0):,}", "下载"))
 
 
