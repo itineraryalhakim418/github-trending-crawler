@@ -714,7 +714,6 @@ class GitHubCrawlerGUI(ctk.CTk):
             body, ("sel", "name", "owner", "language", "stars", "forks", "action"),
             ("☑", "仓库名称", "作者", "语言", "Stars", "Forks", "操作"),
             [45, 220, 120, 80, 90, 90, 80])
-        self.search_tree.pack_forget()
         self.search_tree.master.pack(side='left', fill='both', expand=True)
 
         self.search_tree.bind("<<TreeviewSelect>>", self._on_search_sel)
